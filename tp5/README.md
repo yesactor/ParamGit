@@ -1,130 +1,184 @@
-ThinkPHP 5.0
-===============
 
-[![Downloads](https://img.shields.io/github/downloads/top-think/think/total.svg)](https://github.com/top-think/think/releases)
-[![Releases](https://img.shields.io/github/release/top-think/think.svg)](https://github.com/top-think/think/releases/latest)
-[![Releases Downloads](https://img.shields.io/github/downloads/top-think/think/latest/total.svg)](https://github.com/top-think/think/releases/latest)
-[![Packagist Status](https://img.shields.io/packagist/v/top-think/think.svg)](https://packagist.org/packages/topthink/think)
-[![Packagist Downloads](https://img.shields.io/packagist/dt/top-think/think.svg)](https://packagist.org/packages/topthink/think)
 
-ThinkPHP5在保持快速开发和大道至简的核心理念不变的同时，PHP版本要求提升到5.4，对已有的CBD模式做了更深的强化，优化核心，减少依赖，基于全新的架构思想和命名空间实现，是ThinkPHP突破原有框架思路的颠覆之作，其主要特性包括：
 
- + 基于命名空间和众多PHP新特性
- + 核心功能组件化
- + 强化路由功能
- + 更灵活的控制器
- + 重构的模型和数据库类
- + 配置文件可分离
- + 重写的自动验证和完成
- + 简化扩展机制
- + API支持完善
- + 改进的Log类
- + 命令行访问支持
- + REST支持
- + 引导文件支持
- + 方便的自动生成定义
- + 真正惰性加载
- + 分布式环境支持
- + 更多的社交类库
 
-> ThinkPHP5的运行环境要求PHP5.4以上。
 
-详细开发文档参考 [ThinkPHP5完全开发手册](http://www.kancloud.cn/manual/thinkphp5)
 
-## 目录结构
 
-初始的目录结构如下：
 
-~~~
-www  WEB部署目录（或者子目录）
-├─composer.json         composer定义文件
-├─README.md             README文件
-├─LICENSE.txt           授权说明文件
-├─think                 命令行入口文件
-├─application           应用目录
-│  ├─common             公共模块目录（可以更改）
-│  ├─runtime            应用的运行时目录（可写，可定制）
-│  ├─module_name        模块目录
-│  │  ├─config.php      模块配置文件
-│  │  ├─common.php      模块函数文件
-│  │  ├─controller      控制器目录
-│  │  ├─model           模型目录
-│  │  ├─view            视图目录
-│  │  └─ ...            更多类库目录
-│  │
-│  ├─common.php         公共函数文件
-│  ├─config.php         公共配置文件
-│  ├─route.php          路由配置文件
-│  └─database.php       数据库配置文件
-│
-├─public                WEB目录（对外访问目录）
-│  ├─index.php          入口文件
-│  └─.htaccess          用于apache的重写
-│
-├─thinkphp              框架系统目录
-│  ├─lang               语言文件目录
-│  ├─library            框架类库目录
-│  │  ├─think           Think类库包目录
-│  │  └─traits          系统Trait目录
-│  │
-│  ├─mode               应用模式目录
-│  ├─tpl                系统模板目录
-│  ├─tests              单元测试文件目录
-│  ├─base.php           基础定义文件
-│  ├─console.php        控制台入口文件
-│  ├─convention.php     框架惯例配置文件
-│  ├─helper.php         助手函数文件
-│  ├─phpunit.xml        phpunit配置文件
-│  └─start.php          框架入口文件
-│
-├─extend                扩展类库目录
-├─vendor                第三方类库目录（Composer依赖库）
-~~~
 
-> router.php用于php自带webserver支持，可用于快速测试
-> 切换到public目录后，启动命令：php -S localhost:8888  router.php
-> 上面的目录结构和名称是可以改变的，这取决于你的入口文件和配置参数。
 
-## 命名规范
 
-`ThinkPHP5`遵循PSR-2命名规范和PSR-4自动加载规范，并且注意如下规范：
 
-### 目录和文件
 
-*   目录不强制规范，驼峰和小写+下划线模式均支持；
-*   类库、函数文件统一以`.php`为后缀；
-*   类的文件名均以命名空间定义，并且命名空间的路径和类库文件所在路径一致；
-*   类名和类文件名保持一致，统一采用驼峰法命名（首字母大写）；
 
-### 函数和类、属性命名
-*   类的命名采用驼峰法，并且首字母大写，例如 `User`、`UserType`，默认不需要添加后缀，例如`UserController`应该直接命名为`User`；
-*   函数的命名使用小写字母和下划线（小写字母开头）的方式，例如 `get_client_ip`；
-*   方法的命名使用驼峰法，并且首字母小写，例如 `getUserName`；
-*   属性的命名使用驼峰法，并且首字母小写，例如 `tableName`、`instance`；
-*   以双下划线“__”打头的函数或方法作为魔法方法，例如 `__call` 和 `__autoload`；
 
-### 常量和配置
-*   常量以大写字母和下划线命名，例如 `APP_PATH`和 `THINK_PATH`；
-*   配置参数以小写字母和下划线命名，例如 `url_route_on` 和`url_convert`；
 
-### 数据表和字段
-*   数据表和字段采用小写加下划线方式命名，并注意字段名不要以下划线开头，例如 `think_user` 表和 `user_name`字段，不建议使用驼峰和中文作为数据表字段命名。
 
-## 参与开发
-注册并登录 Github 帐号， fork 本项目并进行改动。
 
-更多细节参阅 [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## 版权信息
+________________________________________________________________________________________
+----------------------------------------------------------------------------------------
+Git常用命令
+查看、添加、提交、删除、找回，重置修改文件
+git help # 显示command的help
 
-ThinkPHP遵循Apache2开源协议发布，并提供免费使用。
+git show # 显示某次提交的内容 git show $id
 
-本项目包含的第三方源码和二进制文件之版权信息另行标注。
+git co -- # 抛弃工作区修改
 
-版权所有Copyright © 2006-2016 by ThinkPHP (http://thinkphp.cn)
+git co . # 抛弃工作区修改
 
-All rights reserved。
+git add # 将工作文件修改提交到本地暂存区
 
-ThinkPHP® 商标和著作权所有者为上海顶想信息科技有限公司。
+git add . # 将所有修改过的工作文件提交暂存区
 
-更多细节参阅 [LICENSE.txt](LICENSE.txt)
+git rm # 从版本库中删除文件
+
+git rm --cached # 从版本库中删除文件，但不删除文件
+
+git reset # 从暂存区恢复到工作文件
+
+git reset -- . # 从暂存区恢复到工作文件
+
+git reset --hard # 恢复最近一次提交过的状态，即放弃上次提交后的所有本次修改
+
+git ci git ci . git ci -a # 将git add, git rm和git ci等操作都合并在一起做　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+git ci -am "some comments"
+
+git ci --amend # 修改最后一次提交记录
+
+git revert <$id> # 恢复某次提交的状态，恢复动作本身也创建次提交对象
+
+git revert HEAD # 恢复最后一次提交的状态
+
+查看文件diff
+git diff # 比较当前文件和暂存区文件差异 git diff
+
+git diff <$id1> <$id2> # 比较两次提交之间的差异
+
+git diff .. # 在两个分支之间比较
+
+git diff --staged # 比较暂存区和版本库差异
+
+git diff --cached # 比较暂存区和版本库差异
+
+git diff --stat # 仅仅比较统计信息
+
+查看提交记录
+git log git log # 查看该文件每次提交记录
+
+git log -p # 查看每次详细修改内容的diff
+
+git log -p -2 # 查看最近两次详细修改内容的diff
+
+git log --stat #查看提交统计信息
+
+tig
+
+Mac上可以使用tig代替diff和log，brew install tig
+
+Git 本地分支管理
+
+查看、切换、创建和删除分支
+git br -r # 查看远程分支
+
+git br <new_branch> # 创建新的分支
+
+git br -v # 查看各个分支最后提交信息
+
+git br --merged # 查看已经被合并到当前分支的分支
+
+git br --no-merged # 查看尚未被合并到当前分支的分支
+
+git co # 切换到某个分支
+
+git co -b <new_branch> # 创建新的分支，并且切换过去
+
+git co -b <new_branch> # 基于branch创建新的new_branch
+
+git co $id # 把某次历史提交记录checkout出来，但无分支信息，切换到其他分支会自动删除
+
+git co $id -b <new_branch> # 把某次历史提交记录checkout出来，创建成一个分支
+
+git br -d # 删除某个分支
+
+git br -D # 强制删除某个分支 (未被合并的分支被删除的时候需要强制)
+
+分支合并和rebase
+git merge # 将branch分支合并到当前分支
+
+git merge origin/master --no-ff # 不要Fast-Foward合并，这样可以生成merge提交
+
+git rebase master # 将master rebase到branch，相当于： git co &&
+git rebase master && git co master && git merge
+
+Git补丁管理(方便在多台机器上开发同步时用)
+git diff > ../sync.patch # 生成补丁
+
+git apply ../sync.patch # 打补丁
+
+git apply --check ../sync.patch #测试补丁能否成功
+
+Git暂存管理
+git stash # 暂存
+
+git stash list # 列所有stash
+
+git stash apply # 恢复暂存的内容
+
+git stash drop # 删除暂存区
+
+Git远程分支管理
+git pull # 抓取远程仓库所有分支更新并合并到本地
+
+git pull --no-ff # 抓取远程仓库所有分支更新并合并到本地，不要快进合并
+
+git fetch origin # 抓取远程仓库更新
+
+git merge origin/master # 将远程主分支合并到本地当前分支
+
+git co --track origin/branch # 跟踪某个远程分支创建相应的本地分支
+
+git co -b <local_branch> origin/<remote_branch> # 基于远程分支创建本地分支，功能同上
+
+git push # push所有分支
+
+git push origin master # 将本地主分支推到远程主分支
+
+git push -u origin master # 将本地主分支推到远程(如无远程主分支则创建，用于初始化远程仓库)
+
+git push origin <local_branch> # 创建远程分支， origin是远程仓库名
+
+git push origin <local_branch>:<remote_branch> # 创建远程分支
+
+git push origin :<remote_branch> #先删除本地分支(git br -d )，然后再push删除远程分支
+
+Git远程仓库管理
+GitHub
+git remote -v # 查看远程服务器地址和仓库名称
+
+git remote show origin # 查看远程服务器仓库状态
+
+git remote add origin git@ github:robbin/robbin_site.git # 添加远程仓库地址
+
+git remote set-url origin git@ github.com:robbin/robbin_site.git # 设置远程仓库地址(用于修改远程仓库地址) git remote rm # 删除远程仓库
+
+创建远程仓库
+git clone --bare robbin_site robbin_site.git # 用带版本的项目创建纯版本仓库
+
+scp -r my_project.git git@ git.csdn.net:~ # 将纯仓库上传到服务器上
+mkdir robbin_site.git && cd robbin_site.git && git --bare init # 在服务器创建纯仓库
+
+git remote add origin git@ github.com:robbin/robbin_site.git # 设置远程仓库地址
+git push -u origin master # 客户端首次提交
+
+git push -u origin develop # 首次将本地develop分支提交到远程develop分支，并且track
+
+git remote set-head origin master # 设置远程仓库的HEAD指向master分支
+
+也可以命令设置跟踪远程库和本地库
+
+git branch --set-upstream master origin/master
+
+git branch --set-upstream develop origin/develop
