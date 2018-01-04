@@ -1,47 +1,41 @@
 <?php
 namespace app\index\controller;
-use think\Request;              // 请求
-use think\Controller;
 use app\common\model\Admin;
-use think\Validate;
+use think\Controller;
+use think\Session;
 
+class LoginController extends Controller {
 
-class LoginController extends AdminController
-{
-    // 用户登录表单
-    public function index()
-    {
+	public function login() {
+		return $this->fetch('/loging');
+	}
+	public function doLogin(Admin $admin, $username, $password) {
+		$map = array('username' => $username, 'password' => $password);
+		$admin = $admin->login($map);
+		if ($admin) {
+			Session::set('admin_id', $uid);
+			$data = ['static' => 1];
+			return json($data);
+		} else {
+			$data = ['static' => 2, 'msg' => '登陆失败'];
+			return json($data);
+		}
+	}
 
-        // 显示登录表单
-             return view('/loging');
+	public function getAdminInfo($uid) {
+		Admin::get();
+		$info = $admin->info($uid);
+		if ($info) {
+			$this->assign('admin', $info);
+			return $this->fetch();
+		} else {
+			return '用户不存在';
+		}
+	}
 
-    }
-
-    // 处理用户提交的登录数据
-    public function login ()
-    {
-                header("Access-Control-Allow-Origin: *");
-                if ($this->request->isAjax()) {
-
-                                          }
-    }
-
-    // 注销
-    public function logOut()
-    {
-        if (Admin::logOut()) {
-            return $this->success('成功注销登陆！', url('Logout'));
-        } else {
-            return $this->error('注销登陆失败！', url());
-        }
-    }
-
-
-
-
-
-
-
-
-
+	protected function getAdminRole() {
+		$uid = Session::get('admin_id');
+		$admin = Admin::get($uid);
+		return $admin->role();
+	}
 }

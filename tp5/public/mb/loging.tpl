@@ -70,21 +70,22 @@
     form.on("submit(submit)", function(data) {
       console.log(data.field);
            layer.load(1);
-      var    actionUrl=$('form').attr('action');
+
       $.ajax({
         type: 'POST',
-        url: actionUrl,
+        async:false,
+        url: "{:url('Login:doLogin')}",
         datatype:'json',
         data:data.field,
-        success: function(data) {
+        success: function($data) {
           layer.closeAll('loading');
-        if (data.code === 1) {
-            layer.msg(data.msg,{shade:0.3,time:3000},function(){
-            location.href='{:url('admin/index')}';
+        if ($data.static === 1) {
+            layer.msg('登陆成功',{shade:0.3,time:3000},function(){
+               window.location.href="{:url('Admin:index')}";
           });
 
         }else{
-           layer.msg(data.msg,{shade:0.3,time:0,closeBtn: 0,shadeClose:true}, function() {})
+           layer.msg($data.msg,{shade:0.3,time:0,closeBtn: 0,shadeClose:true}, function() {})
         }
       }
     });

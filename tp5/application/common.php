@@ -10,18 +10,30 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
-
-
-
-
 /**
- * $msg 待提示的消息
- * $url 待跳转的链接
- * $icon 这里主要有两个，5和6，代表两种表情（哭和笑）
- * $time 弹出维持时间（单位秒）
+ * 封装一个成功、失败的弹窗
+ *
  */
-function alert($msg='',$url='',$icon='',$time=3){
-    $str='<script type="text/javascript" src="'.config('admin_static').'/lib/jquery/1.9.1/jquery.min.js"></script><script type="text/javascript" src="'.config('admin_static').'/lib/layer/2.1/layer.js"></script>';//加载jquery和layer
-    $str.='<script>$(function(){layer.msg("'.$msg.'",{icon:'.$icon.',time:'.($time*1000).'});setTimeout(function(){self.location.href="'.$url.'"},2000)});</script>';//主要方法
-    return $str;
+function alertC($msg = '', $url = '', $wait = 3) {
+	$str = '<script type="text/javascript" src="__PUBLIC__/static/layui/lay/modules/layer.js"></script><script type="text/javascript" src="__PUBLIC__/static/layui/lay/modules/jquery.js"></script>';
+	$str .= "<script>
+     $(function(){
+     layer.msg(" . $msg . ",{time:(" . $wait . "*1000),shade:0.3,shadeClose:ture},function(){self.location.href= " . $url . "});})
+        </script>";
+	return $str;
+}
+
+function alertE($msg = '') {
+	$str = '<script type="text/javascript" src="__PUBLIC__/static/layui/lay/modules/layer.js"></script><script type="text/javascript" src="__PUBLIC__/static/layui/lay/modules/jquery.js"></script>';
+	$str .= "<script>
+     $(function(){
+       layer.open({content:" . $msg . ",icon:2,closeBtn:0,shadeClose:true,title: false,shade:0.3,btnAlign:'c',yes:function(index){
+              layer.close(index);
+              window.history.go(-1);
+          }
+        });
+     })
+        </script>";
+	return $str;
+
 }

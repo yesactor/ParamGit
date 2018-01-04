@@ -9,24 +9,31 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-
 use think\Route;
 
-//Route::bind('\app\index\controller\Admin','class');
+Route::resource('blog', 'index/Blog');
+Route::rule(['login', 'login/:[data]:[id]'], '\app\index\controller\Login');
+Route::rule(['admin', 'admin/:[data]:[id]'], '\app\index\controller\Admin');
+Route::rule(['cj', 'cj/:[data]:[id]'], '\app\index\controller\Cj');
+Route::rule(['showset', 'showset/:[data]:[id]'], '\app\index\controller\Showset');
+Route::pattern([
+	'name' => '\w+',
+	'id' => '\d+',
+]);
 
-   Route::alias('admin','\app\index\controller\AdminController');
-   Route::alias('login','\app\index\controller\LoginController');
-return[
+return [
 
-  '__pattern__' =>[
-        'name' => '\w+',
-        'id'   => '\d+',
-   ],
+	'__alias__' => [
+		'login' => 'index/Login',
+		'admin' => 'index/Admin',
+		'cj' => 'index/Cj',
+		'showset' => 'index/Showset',
+	],
+	'__rest__' => [
+		'blog' => 'index/Blog',
+	],
 
-   'login/index' =>['index/login/index',['method'=>'POST']],
-   'login/login' =>['index/login/login',['method'=>'POST']],
-   'admin/index' =>['index/admin/index',['method'=>'POST'|'GET']],
-
-
+	/*首页*/
+	'' => 'index/Showset/index',
 
 ];

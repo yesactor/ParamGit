@@ -13,16 +13,6 @@
 
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/../application/');
-
+define('VIEW_PATH', __DIR__ . '/../public/mb/');
 // 加载框架基础引导文件
 require __DIR__ . '/../thinkphp/start.php';
-
-
-// 添加额外的代码
-// ...
-// 执行应用
-//\think\App::run()->send();
-// 自动生成定义文件
-//  \think\Build::module('home');
-
-
